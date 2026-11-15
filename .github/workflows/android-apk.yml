@@ -63,15 +63,19 @@ jobs:
           cp app/build/outputs/apk/debug/app-debug.apk dist/BOTW-Recomp-Neo-debug.apk
 
       - name: Compilar Release APK (si hay secretos de firma configurados)
-        if: ${{ secrets.UPLOAD_KEYSTORE_BASE64 != '' && secrets.STORE_PASSWORD != '' && secrets.KEY_PASSWORD != '' }}
         env:
+          UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          echo "${{ secrets.UPLOAD_KEYSTORE_BASE64 }}" | base64 -d > my-upload-key.jks
-          export KEYSTORE_PATH="${{ github.workspace }}/my-upload-key.jks"
-          gradle :app:assembleRelease --no-daemon
-          cp app/build/outputs/apk/release/app-release.apk dist/BOTW-Recomp-Neo-release.apk
+          if [ -n "${UPLOAD_KEYSTORE_BASE64:-}" ] && [ -n "${STORE_PASSWORD:-}" ] && [ -n "${KEY_PASSWORD:-}" ]; then
+            echo "$UPLOAD_KEYSTORE_BASE64" | base64 -d > my-upload-key.jks
+            export KEYSTORE_PATH="${{ github.workspace }}/my-upload-key.jks"
+            gradle :app:assembleRelease --no-daemon
+            cp app/build/outputs/apk/release/app-release.apk dist/BOTW-Recomp-Neo-release.apk
+          else
+            echo "Sin secretos de firma release; se omite assembleRelease y se entrega el Debug APK."
+          fi
 
       - name: Subir APK a GitHub Actions Artifacts
         uses: actions/upload-artifact@v4
