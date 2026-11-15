@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">BOTW Recomp Neo</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Lanzador</string>
+    <string name="nav_optimizer">Optimizar</string>
+    <string name="nav_benchmark">Benchmark</string>
+    <string name="nav_controls">Controles</string>
+
+    <!-- Header & Device Status -->
+    <string name="hero_subtitle">Recompilador Estático NVN → Vulkan</string>
+    <string name="hero_target_chip">Motorola Edge 40 Neo • Dimensity 7030 • Mali-G610 MC3</string>
+    <string name="device_match_verified">Edge 40 Neo detectado — Calibración nativa activa</string>
+    <string name="device_match_emulated">Perfil Edge 40 Neo activo sobre %1$s</string>
+
+    <!-- Home / Launcher Screen -->
+    <string name="section_game_dump">Archivos del Juego (Dump Legal)</string>
+    <string name="dump_select_folder">Seleccionar carpeta dump (exefs / romfs)</string>
+    <string name="dump_rescan">Volver a escanear</string>
+    <string name="dump_no_folder">Sin carpeta vinculada. Selecciona tu copia extraída de Switch (1.0.0, 1.6.0, 1.8.2 o 1.9.0) vía SAF sin permisos invasivos.</string>
+    <string name="dump_scanning">Escaneando estructura Switch…</string>
+    <string name="dump_version_label">Versión objetivo</string>
+    <string name="section_presets">Perfiles Motorola Edge 40 Neo</string>
+    <string name="preset_balanced_title">Equilibrado Edge 40 Neo</string>
+    <string name="preset_balanced_desc">60 FPS / 120Hz pOLED • Escala 0.80x • Mali ASTC • Afinidad 2x A78</string>
+    <string name="preset_ultra_title">Ultra 144Hz pOLED</string>
+    <string name="preset_ultra_desc">144Hz nativo + LSFG 2x • Escala 0.72x • Valhall FP16 • Shaders Async</string>
+    <string name="preset_thermal_title">Térmico y Batería 30 FPS</string>
+    <string name="preset_thermal_desc">30 FPS / 60Hz • Escala 0.65x • TBDR Tile Clear • Sin throttling</string>
+    <string name="preset_custom_title">Personalizado</string>
+    <string name="preset_custom_desc">Ajuste manual de recompilador, GPU Mali y afinidad CPU</string>
+
+    <string name="section_pipeline">Compilar y Exportar Perfil</string>
+    <string name="btn_generate_plan">Preparar Plan de Recompilación</string>
+    <string name="btn_export_config">Exportar edge40_neo_recomp.json</string>
+    <string name="config_exported_msg">Configuración exportada correctamente</string>
+    <string name="config_saved_internal">Perfil guardado en almacenamiento interno de la app</string>
+
+    <!-- Optimizer Screen -->
+    <string name="opt_title">Motor Edge 40 Neo</string>
+    <string name="opt_execution_mode">Modo de Ejecución</string>
+    <string name="opt_mode_static">Recompilación Estática (ARMv8.2-A)</string>
+    <string name="opt_mode_native">Modo Nativo Experimental (ARM64 Directo)</string>
+    <string name="opt_graphics_section">Gráficos NVN → Vulkan (Mali-G610 MC3)</string>
+    <string name="opt_driver_note">Mali-G610 usa arquitectura Valhall: los drivers Turnip (Adreno) están deshabilitados automáticamente para evitar cierres.</string>
+    <string name="opt_resolution_scale">Escala de Resolución Interna</string>
+    <string name="opt_texture_pipeline">Pipeline de Texturas</string>
+    <string name="opt_display_refresh">Tasa de Refresco pOLED</string>
+    <string name="opt_lsfg_section">Frame Generation (LSFG)</string>
+    <string name="opt_lsfg_pick_dll">Vincular Lossless.dll (SAF)</string>
+    <string name="opt_lsfg_clear_dll">Desvincular DLL</string>
+    <string name="opt_cpu_section">CPU Dimensity 7030 (2x A78 + 6x A55)</string>
+    <string name="opt_pin_a78">Fijar hilo principal en núcleos Cortex-A78 (2.5 GHz)</string>
+    <string name="opt_fp16_valhall">Precisión FP16 Valhall en shaders cel-shaded</string>
+    <string name="opt_async_shader">Pre-compilación asíncrona de shaders Vulkan</string>
+    <string name="opt_tbdr_opt">Optimización Mali TBDR (Tile-Based Clear)</string>
+    <string name="opt_thermal_guard">Protección térmica Dimensity (límite 42 °C)</string>
+
+    <!-- Benchmark Screen -->
+    <string name="bench_title">Prueba Real GPU &amp; pOLED</string>
+    <string name="bench_start">Iniciar Benchmark</string>
+    <string name="bench_stop">Detener y Guardar</string>
+    <string name="bench_overlay_compact">HUD Compacto</string>
+    <string name="bench_overlay_detailed">HUD Detallado</string>
+    <string name="bench_history_title">Historial de Rendimiento (Room)</string>
+    <string name="bench_history_empty">Aún no hay mediciones guardadas. Ejecuta el benchmark de shaders GLES/Vulkan para registrar FPS reales y frame time en tu dispositivo.</string>
+    <string name="bench_clear_history">Limpiar</string>
+
+    <!-- Controls & Hardware Screen -->
+    <string name="ctrl_title">Controles y Telemetría</string>
+    <string name="ctrl_gamepad_section">Mandos Bluetooth / USB-C Detectados</string>
+    <string name="ctrl_gamepad_scan">Actualizar Mandos</string>
+    <string name="ctrl_gamepad_none">Ningún mando físico conectado. Usa el HUD táctil optimizado para pantalla curva 20:9.</string>
+    <string name="ctrl_touch_hud_section">HUD Táctil pOLED Curvo (Edge 40 Neo)</string>
+    <string name="ctrl_edge_rejection">Margen anti-toques en bordes curvos</string>
+    <string name="ctrl_hud_opacity">Opacidad de controles</string>
+    <string name="ctrl_hud_scale">Escala de botones</string>
+    <string name="ctrl_gyro_aim">Giroscopio para apuntado con arco</string>
+    <string name="ctrl_haptic_test">Probar Vibración Háptica</string>
+    <string name="ctrl_telemetry_section">Telemetría Real del Hardware</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_hero_banner">Banner de arquitectura Edge 40 Neo</string>
+    <string name="cd_status_icon">Estado de hardware</string>
+    <string name="cd_gamepad_icon">Icono de mando</string>
+    <string name="cd_delete_run">Eliminar medición</string>
+</resources>

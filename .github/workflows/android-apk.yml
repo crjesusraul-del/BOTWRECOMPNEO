@@ -1,0 +1,87 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    name: Compilar Test & APK (BOTW Recomp Neo)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 17 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar Android SDK Platform 36.1 y Build Tools
+        run: |
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager "platform-tools" "platforms;android-36.1" "build-tools;36.0.0" || sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Configurar Gradle 9.3.1
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.3.1'
+
+      - name: Preparar debug.keystore y .env para compilación
+        run: |
+          if [ ! -f debug.keystore ] && [ -f debug.keystore.base64 ]; then
+            base64 -d debug.keystore.base64 > debug.keystore
+          fi
+          if [ ! -f .env ] && [ -f .env.example ]; then
+            cp .env.example .env
+          fi
+          if [ -f gradlew ]; then
+            chmod +x gradlew
+          fi
+
+      - name: Ejecutar pruebas unitarias y Robolectric
+        run: gradle :app:testDebugUnitTest --no-daemon
+
+      - name: Compilar Debug APK (listo para instalar)
+        run: gradle :app:assembleDebug --no-daemon
+
+      - name: Preparar artefacto APK
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/debug/app-debug.apk dist/BOTW-Recomp-Neo-debug.apk
+
+      - name: Compilar Release APK (si hay secretos de firma configurados)
+        if: ${{ secrets.UPLOAD_KEYSTORE_BASE64 != '' && secrets.STORE_PASSWORD != '' && secrets.KEY_PASSWORD != '' }}
+        env:
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo "${{ secrets.UPLOAD_KEYSTORE_BASE64 }}" | base64 -d > my-upload-key.jks
+          export KEYSTORE_PATH="${{ github.workspace }}/my-upload-key.jks"
+          gradle :app:assembleRelease --no-daemon
+          cp app/build/outputs/apk/release/app-release.apk dist/BOTW-Recomp-Neo-release.apk
+
+      - name: Subir APK a GitHub Actions Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: BOTW-Recomp-Neo-APK
+          path: dist/*.apk
+          if-no-files-found: error
+
+      - name: Crear Release en GitHub (en tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.apk

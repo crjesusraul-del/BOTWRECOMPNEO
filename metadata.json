@@ -1,0 +1,6 @@
+{
+  "name": "BOTW Recomp Neo",
+  "description": "Lanzador de recompilación estática y optimizador de hardware Vulkan/Mali-G610 y Dimensity 7030 para Motorola Edge 40 Neo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
