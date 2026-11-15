@@ -20,11 +20,11 @@ jobs:
       - name: Checkout del repositorio
         uses: actions/checkout@v5
 
-      - name: Configurar JDK 17 (Temurin)
+      - name: Configurar JDK 21 (Temurin)
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
 
       - name: Instalar Android SDK Platform 36.1 y Build Tools
         run: |
